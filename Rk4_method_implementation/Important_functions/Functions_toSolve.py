@@ -1,9 +1,7 @@
 import jax.numpy as jnp
 
-## working environment is Jax env december :
 
 def f(y, z, alpha_values):
-    print("Hello Boss !!")
     return z
 
 def g(y, z, alpha_values):

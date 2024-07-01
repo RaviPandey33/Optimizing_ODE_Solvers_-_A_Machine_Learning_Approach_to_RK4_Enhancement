@@ -18,8 +18,8 @@ from jax._src.lax.utils import (
 )
 from jax._src.lax import lax
 
-import Transformation_Functions as TFunctions
-import Functions_toSolve
+import Rk4_method_implementation.Important_functions.Transformation_Functions as TFunctions
+import Rk4_method_implementation.Important_functions.Functions_toSolve as Functions_toSolve
 
 @jit
 def PRK_step(y0 , z0, h, A1, A2, B1, B2, alpha_values):
