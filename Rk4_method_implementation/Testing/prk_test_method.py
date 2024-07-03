@@ -118,7 +118,7 @@ def find_error_test(A1D):
     y0 = jnp.reshape(jnp.array(H_sequence[4]), (1, 1))
     z0 = jnp.reshape(jnp.array(H_sequence[5]), (1, 1))
 
-    istep = 100
+    istep = 1000
     NN = jnp.array([100])
 
     yn_list = jnp.zeros((time_factor * NN[0], 1))
