@@ -118,8 +118,8 @@ def find_error_test(A1D):
     y0 = jnp.reshape(jnp.array(H_sequence[4]), (1, 1))
     z0 = jnp.reshape(jnp.array(H_sequence[5]), (1, 1))
 
-    istep = 10
-    NN = jnp.array([10])
+    istep = 100
+    NN = jnp.array([100])
 
     yn_list = jnp.zeros((time_factor * NN[0], 1))
     zn_list = jnp.zeros((time_factor * NN[0], 1))
@@ -142,8 +142,8 @@ def find_error_test(A1D):
     
     ## Gradient using jacfwd works till here correctly 
 
-    j1_iyn_list = iyn_list[9:istep * NN[0]:10]
-    j2_izn_list = izn_list[9:istep * NN[0]:10]
+    j1_iyn_list = iyn_list[9:istep * NN[0]:istep] ## earlier : instead of istep, i had written 10
+    j2_izn_list = izn_list[9:istep * NN[0]:istep] ## "" same as above
     
 
     err1 = j1_iyn_list.ravel() - yn_list.ravel()
