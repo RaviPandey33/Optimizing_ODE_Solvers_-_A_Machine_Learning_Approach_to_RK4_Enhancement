@@ -42,29 +42,12 @@ import Important_functions.Energy_Error as EE
 ## Lobatto 3A and B fourth order
 
 A1 = A2 = jnp.array([
-     [0.5, 0.289, 0.1573, 1.],
-     [11/24, 2/3, -6/24, 1.],
-     [2/7, 1/3, 5/6, 0.5],
-     [0.1276, 0.1, 0.24, 0.5]])
+     [0.1, 0., 0., 0.],
+     [5/24, 2/3, -1/24, 1.],
+     [2/6, 2/3, 1/6, 0.],
+     [0., 1., 0., 0.]])
 B1 = B2 = jnp.array([1/6, 2/3, 1/6, 0.])
 
-"""
- Perturbe Function :
-"""
-
-# Function to perturb weights
-def perturb_weights(weights, std_dev):
-    noise = jnp.array(jax.random.normal(jax.random.PRNGKey(0), weights.shape) * std_dev)
-    perturbed_weights = weights + noise
-    return perturbed_weights
-
-high_std_dev = 0.1
-low_std_dev = 0.01
-
-# A1 =
-# A2 =
-# B1 =
-# B2 =
 
 
 ## Making the Halton code
@@ -94,7 +77,7 @@ import optax
 A1D = convert.Convert_toOneD(A1, A2, B1, B2)
 print(A1D.shape)
 learning_rate = 0.0001
-list_optimizers = [optax.sgd(learning_rate)]
+list_optimizers = [optax.adam(learning_rate)]
 # chosing Stochastic Gradient Descent Algorithm.
 # # We have created a list here keeping in mind that we may apply all the optimizers in optax by storing their objects in the list
  
@@ -154,7 +137,7 @@ total_error_e = 0
 validation_tot_error = 0
 validation_avg_error = 0
 
-with open('S1_Error(Perturbed_high).txt', 'w') as S1_output, open('S1_Final_weights(Perturbed_high).txt', 'w') as S1_weights:
+with open('S2_Error(Perturbed_low).txt', 'w') as S1_output, open('S2_Final_weights(Perturbed_low).txt', 'w') as S1_weights:
     ## Batch Size
     batch_size = 100 ## just to remind you right now total halton sequence is also 100, so we are taking the whole set as the batch.
     validation_batch_size = 50
@@ -190,6 +173,7 @@ with open('S1_Error(Perturbed_high).txt', 'w') as S1_output, open('S1_Final_weig
         S1_weights.write(np_array_A1D_string) #+ '\n')
         # S1_weights.flush()  # Ensure it writes to disk
         # S1_weights.close()
+        
         """
         # what am i tying to do here ?
         """

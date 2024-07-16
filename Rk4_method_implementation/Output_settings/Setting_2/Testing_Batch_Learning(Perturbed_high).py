@@ -94,7 +94,7 @@ import optax
 A1D = convert.Convert_toOneD(A1, A2, B1, B2)
 print(A1D.shape)
 learning_rate = 0.0001
-list_optimizers = [optax.sgd(learning_rate)]
+list_optimizers = [optax.adam(learning_rate)]
 # chosing Stochastic Gradient Descent Algorithm.
 # # We have created a list here keeping in mind that we may apply all the optimizers in optax by storing their objects in the list
  
@@ -154,7 +154,7 @@ total_error_e = 0
 validation_tot_error = 0
 validation_avg_error = 0
 
-with open('S1_Error(Perturbed_high).txt', 'w') as S1_output, open('S1_Final_weights(Perturbed_high).txt', 'w') as S1_weights:
+with open('S2_Error(Perturbed_high).txt', 'w') as S1_output, open('S2_Final_weights(Perturbed_high).txt', 'w') as S1_weights:
     ## Batch Size
     batch_size = 100 ## just to remind you right now total halton sequence is also 100, so we are taking the whole set as the batch.
     validation_batch_size = 50

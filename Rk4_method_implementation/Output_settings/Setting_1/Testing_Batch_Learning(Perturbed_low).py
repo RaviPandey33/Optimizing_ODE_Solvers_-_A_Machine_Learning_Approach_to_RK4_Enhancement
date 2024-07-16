@@ -14,6 +14,7 @@ from jax import jacfwd
 from jax import grad, jit, vmap, pmap
 import jax
 from jax import jit
+import numpy as np
 
 from jax._src.lax.utils import (
     _argnum_weak_type,
@@ -41,10 +42,10 @@ import Important_functions.Energy_Error as EE
 ## Lobatto 3A and B fourth order
 
 A1 = A2 = jnp.array([
-     [0., 0., 0., 0.],
-     [5/24, 1/3, -1/24, 0.],
-     [1/6, 2/3, 1/6, 0.],
-     [0., 0., 0., 0.]])
+     [0.1, 0., 0., 0.],
+     [5/24, 2/3, -1/24, 1.],
+     [2/6, 2/3, 1/6, 0.],
+     [0., 1., 0., 0.]])
 B1 = B2 = jnp.array([1/6, 2/3, 1/6, 0.])
 
 
@@ -64,7 +65,7 @@ halton_sequence = jnp.array(halton_sequence)
 ## Dividing in training and validation set. 100 for the training set and 50 for the validation set. 
 validation_halton = halton_sequence[100:150]
 halton_sequence = halton_sequence[:100]
-print(halton_sequence)
+# print(halton_sequence)
 
 # print(len(halton_sequence))
 # print(len(validaton_halton))
@@ -136,12 +137,12 @@ total_error_e = 0
 validation_tot_error = 0
 validation_avg_error = 0
 
-with open('S1_output_error.txt', 'w') as S1_output:
+with open('S1_Error(Perturbed_low).txt', 'w') as S1_output, open('S1_Final_weights(Perturbed_low).txt', 'w') as S1_weights:
     ## Batch Size
     batch_size = 100 ## just to remind you right now total halton sequence is also 100, so we are taking the whole set as the batch.
     validation_batch_size = 50
     
-    for k in trange(100000):
+    for k in trange(1000000):
         
         tot_error = 0
         validation_tot_error = 0
@@ -165,6 +166,14 @@ with open('S1_output_error.txt', 'w') as S1_output:
             # Calculate the total error for the batch and accumulate it
             batch_error = jnp.mean(compute_error_batched(A1D, batch_halton))
             tot_error += batch_error
+
+        np_array_A1D = np.array(A1D)
+        np_array_A1D_string = ' '.join(map(str, np_array_A1D))
+        S1_weights.seek(0)  # Move to the beginning of the file
+        S1_weights.write(np_array_A1D_string) #+ '\n')
+        # S1_weights.flush()  # Ensure it writes to disk
+        # S1_weights.close()
+        
         """
         # what am i tying to do here ?
         """
