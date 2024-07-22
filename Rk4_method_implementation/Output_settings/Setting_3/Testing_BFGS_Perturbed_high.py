@@ -20,8 +20,6 @@ import Important_functions.Convert_1D2D as convert
 import Important_functions.Energy_Error as EE
 
 # Define the A and B matrices
-
-## Lobatto 3A
 A1 = jnp.array([
      [0., 0., 0., 0.],
      [5/24, 1/3, -1/24, 0.],
@@ -66,7 +64,7 @@ error_list_3 = []  # Energy Error :
 error_list_4 = []  # Validation Error :
 validation_error_list = []
 
-with open('Outputs/S3_Error.txt', 'w') as S3_output, open('Outputs/S3_Energy_Error.txt', 'w') as S3_energy_error, open('Outputs/S3_Validation.txt', 'w') as S3_validation, open('Outputs/S3_Final_weights.txt', 'w') as S3_weights :
+with open('Outputs/S3_Error(Perturbed_high).txt', 'w') as S3_output, open('Outputs/S3_Energy_Error(Perturbed_high).txt', 'w') as S3_energy_error, open('Outputs/S3_Validation(Perturbed_high).txt', 'w') as S3_validation, open('Outputs/S3_Final_weights(Perturbed_high).txt', 'w') as S3_weights :
     for epoch in trange(1):
         # Perform one iteration of BFGS
         result = minimize(objective_function, A1D, args=(halton_sequence,), method='L-BFGS-B', options={'maxiter': 1})

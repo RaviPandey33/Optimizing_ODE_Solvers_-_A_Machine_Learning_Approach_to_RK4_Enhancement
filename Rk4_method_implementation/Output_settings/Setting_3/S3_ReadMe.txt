@@ -10,7 +10,8 @@ _______________________________________________________________
 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 4. Gradient (Jacfwd/Numeric) : Numeric
 5. Loss Function (using abs) : Squared Loss
-6. Energy Error Added (Y/N) : No
+6. Energy Error Added (Y/N) : Yes
+  -Validation Set Added (Y/N) : Yes
 _______________________________________________________________
 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 7. Learning rate : 0.0001

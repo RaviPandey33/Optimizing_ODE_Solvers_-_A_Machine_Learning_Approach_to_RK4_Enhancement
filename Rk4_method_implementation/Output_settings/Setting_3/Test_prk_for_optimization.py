@@ -223,6 +223,7 @@ def find_error(A1D, H_sequence):
     final_error = (jnp.sum(jnp.abs(err1)) + jnp.sum(jnp.abs(err2))) / (2*NN[i])
     
     ## Huber Loss : check mail by christian regarding using this error 
-    # final_error = (jnp.sum(huber_loss(err1)) + jnp.sum(huber_loss(err2))) / (2 * NN[0])
+    final_error = (jnp.sum(huber_loss(err1)) + jnp.sum(huber_loss(err2))) / (2 * NN[0])
 
-    return jnp.sum(final_error) #+ energy_error #, step_size_list_convergence, o_error_list_convergence
+    return jnp.sum(final_error) + energy_error, energy_error #, step_size_list_convergence, o_error_list_convergence
+
