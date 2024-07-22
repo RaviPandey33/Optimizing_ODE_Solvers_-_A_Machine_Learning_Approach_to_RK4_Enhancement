@@ -1,4 +1,4 @@
-Setting Details :
+Setting Details : To find the phase plots
 _______________________________________________________________
 –––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
 1. Batch Learning (Y/N) : NO
