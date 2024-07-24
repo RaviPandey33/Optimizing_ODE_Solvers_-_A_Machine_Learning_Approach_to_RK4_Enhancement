@@ -101,7 +101,7 @@ def numerical_gradient(A1D, halton_element, epsilon=1e-5):
     return numerical_gradients
 
 # Use jax.vmap to vectorize the function over the batch
-compute_grads_batched = jax.vmap(numeric gradient, in_axes=(None, 0)) # 2 options jacfwd or numeric gradient
+compute_grads_batched = jax.vmap(numerical_gradient, in_axes=(None, 0)) # 2 options jacfwd or numeric gradient
 compute_error_batched = jax.vmap(compute_error_single, in_axes=(None, 0))
 
 Total_Error_List = [] # Analytical Error :
