@@ -21,7 +21,7 @@ import Important_functions.Energy_Error as EE
 
 # Define the A and B matrices
 
-## Lobatto 3A
+## Lobatto 3A 4th Order
 A1 = jnp.array([
      [0., 0., 0., 0.],
      [5/24, 1/3, -1/24, 0.],
