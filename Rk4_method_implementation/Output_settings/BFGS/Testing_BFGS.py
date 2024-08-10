@@ -37,7 +37,7 @@ A2 = jnp.array([
 B2 = jnp.array([1/6, 2/3, 1/6, 0.])
 
 # Making the Halton code
-spacedim = [(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5)]
+ spacedim = [(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5),(-1.0, 0.5)]
 space = Space(spacedim)
 halton = Halton()
 n = 150
