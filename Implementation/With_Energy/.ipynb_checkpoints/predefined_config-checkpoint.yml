@@ -1,0 +1,123 @@
+# config.yml
+
+
+initial_weights: # Select the weights you want to optimize
+    selected_table: "Original_Lobatto_3A3B"  # Choose either Original, Perturbed weights, Classical RK4 or Random weights
+    Original_Lobatto_3A3B:
+        A1: 
+        - [0.0, 0.0, 0.0, 0.0]
+        - ["5/24", "1/3", "-1/24", 0.0]
+        - ["1/6", "2/3", "1/6", 0.0]
+        - [0.0, 0.0, 0.0, 0.0]
+        A2: 
+        - ["1/6", "-1/6", 0.0, 0.0]
+        - ["1/6", "1/3", 0.0, 0.0]
+        - ["1/6", "5/6", 0.0, 0.0]
+        - [0.0, 0.0, 0.0, 0.0]
+        B1: ["2/6", "1/3", "1/6", 0.0]
+        B2: ["1/6", "2/3", "1/6", 0.0]
+    
+    Perturbed_Lobatto_3A3B:
+        A1:
+        - ["0.5", 0.0, 0.0, 0.0]
+        - ["5/24", "2/3", "-3/24", 0.0]
+        - ["1/6", "2/3", "1/6", "0.5"]
+        - [0.0, 0.0, 0.5, 0.0]
+        A2:
+        - ["3/6", "-2/6", 0.0, 0.0]
+        - ["1/6", "1/3", 0.0, 0.3]
+        - ["1/6", "5/6", 0.5, 0.0]
+        - [0.0, 0.0, 0.0, 0.0]
+        B1: ["2/6", "1/3", "3/6", "0.25"]
+        B2: ["1/6", "2/3", "1/6", "0.5"]
+    
+    Clasical_RK4 :
+        A1: 
+        - ["0.5", "0.0", "0.0", "0.0"]
+        - ["5/24", "2/3", "-3/24", "0.0"]
+        - ["1/6", "2/3", "1/6", "0.5"]
+        - ["0.0", "0.0", "0.5", "0.0"]
+        A2:
+        - ["3/6", "-2/6", "0.0", "0.0"]
+        - ["1/6", "1/3", "0.0", "0.3"]
+        - ["1/6", "5/6", "0.5", "0.0"]
+        - ["0.0", "0.0", "0.0", "0.0"]
+        B1: ["2/6", "1/3", "3/6", "0.25"]
+        B2: ["1/6", "2/3", "1/6", "0.5"]
+    
+    Random_weights : False
+
+
+halton:  # Settings for Halton sequence sampling
+    space_dim: [-0.5, 0.5]  # Range for sampling
+    dim: 6                  # Dimensionality of the Halton sequence
+    num_samples: 150         # Total number of samples
+    training_size: 100       # Training size for optimization
+
+
+optimizer:  # Optimizer configuration
+    learning_rate: 0.00001  # Initial learning rate
+    switch_threshold: 120000  # Switch optimizer when epochs reached
+    optimizers: 
+        - "adam"              # First optimizer
+        - "sgd"               # Second optimizer to switch to
+
+training:  # Training settings
+    batch_size: 10
+    num_epochs: 1000000     # Total training epochs
+
+error_handling:  # Settings related to error handling
+    with_energy: True       # Include energy error in optimization if True
+    for_plots: True         # Return yn_list, zn_list, and H for plotting
+
+output:  # Output directories and file paths
+    error_file: "With_Energy/Outputs/Error.txt"
+    energy_error_file: "With_Energy/Outputs/Energy.txt"
+    validation_error_file: "With_Energy/Outputs/Validation.txt"
+    final_weights_file: "With_Energy/Outputs/Final_weights.txt"
+
+hamiltonian:  # Hamiltonian system settings
+    selected_hamiltonian: "default"  # Which Hamiltonian to use, default or custom
+
+for_ploting:
+    Simple_Hamiltonian:
+        f_eq: |
+            def f(y, z, alpha_values):
+                return z
+            
+        g_eq: |
+            def g(y, z, alpha_values):
+                return -y
+    
+        energy_function: |
+            def Energy_Function(y, z, alpha_values):
+                return (jnp.square(y) + jnp.square(z)) / 2
+
+    Non_linear_Harmonic: ## Fix this, the equations .
+        f_eq: |
+            def f(y, z, alpha_values):
+                return z
+            
+        g_eq: |
+            def g(y, z, alpha_values):
+                return -y
+    
+        energy_function: |
+            def Energy_Function(y, z, alpha_values):
+                return (jnp.square(y) + jnp.square(z)) / 2
+            
+for_training:
+    f_eq: |
+        def f(y, z, alpha_values):
+            return z
+
+    g_eq: |
+        def g(y, z, alpha_values):
+            alpha_values = alpha_values.transpose()
+            return jnp.add(jnp.add((-1 * alpha_values[0]), (-2 * alpha_values[1] * y)), jnp.add((-3 * alpha_values[2] * (y**2)), (-4 * alpha_values[3] * (y**3))))
+
+    energy_function: |
+        def Energy_Function(y, z, alpha_values):
+            return ((jnp.square(y) / 2) + jnp.add(jnp.add((alpha_values[0] * z), (alpha_values[1] * (z**2))), jnp.add((alpha_values[2] * (z**3)), (alpha_values[3] * (z**4)))))
+
+
