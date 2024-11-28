@@ -1,0 +1,89 @@
+manual_customizing :
+    choice : False # By default, make true and fill the values below for this setting to work.
+    
+initial_weights: # Select the weights you want to optimize.
+  selected_table: "Original_Lobatto_3A3B"  # Original or Perturbed
+
+  Original_Lobatto_3A3B:
+    A1: 
+      - [0.0, 0.0, 0.0, 0.0]
+      - [5/24, 1/3, -1/24, 0.0]
+      - [1/6, 2/3, 1/6, 0.0]
+      - [0.0, 0.0, 0.0, 0.0]
+    A2: 
+      - [1/6, -1/6, 0.0, 0.0]
+      - [1/6, 1/3, 0.0, 0.0]
+      - [1/6, 5/6, 0.0, 0.0]
+      - [0.0, 0.0, 0.0, 0.0]
+    B1: [2/6, 1/3, 1/6, 0.0]
+    B2: [1/6, 2/3, 1/6, 0.0]
+
+  Perturbed_Lobatto_3A3B:
+    A1:
+      - [0.5, 0.0, 0.0, 0.0]
+      - [5/24, 2/3, -3/24, 0.0]
+      - [1/6, 2/3, 1/6, 0.5]
+      - [0.0, 0.0, 0.5, 0.0]
+    A2:
+      - [3/6, -2/6, 0.0, 0.0]
+      - [1/6, 1/3, 0.0, 0.3]
+      - [1/6, 5/6, 0.5, 0.0]
+      - [0.0, 0.0, 0.0, 0.0]
+    B1: [2/6, 1/3, 3/6, 0.25]
+    B2: [1/6, 2/3, 1/6, 0.5]
+
+  # Add more tables here as needed
+halton:
+  space_dim: [-0.5, 0.5]
+  dim: 6
+  num_samples: 150
+  training_size : 100
+
+optimizer:
+  learning_rate: 0.00001
+  switch_threshold: 1e-6 # After this the optimizer switches
+  optimizers: 
+    - "adam"
+    - "sgd"
+
+training:
+  batch_size: 10
+  num_epochs: 1000000 # Training Loop
+
+error_handling:
+  with_energy: True  # Set to True to include energy error, False to exclude it
+  for_plots: True    # Set to True if you want to return yn_list, zn_list, and H for plotting
+
+output:
+  logs_dir: "With_Energy/Outputs/" # Incase a new setting is there, please change the directory
+  error_file: "With_Energy/Outputs/B-Error.txt"
+  energy_error_file: "With_Energy/Outputs/B-Energy.txt"
+  validation_error_file: "With_Energy/Outputs/B-Validation.txt"
+  batched_error_file: "With_Energy/Outputs/B-Batched_Error.txt"
+  final_weights_file: "With_Energy/Outputs/B-Final_weights.txt"
+
+hamiltonian:
+  selected_hamiltonian: "default"  # Add this option to select which Hamiltonian to use
+
+  for_plots:
+    f_eq: |
+      def f(y, z, alpha_values):
+          return z
+    g_eq: |
+      def g(y, z, alpha_values):
+          return -y
+    energy_function: |
+      def Energy_Function(y, z, alpha_values):
+          return (jnp.square(y) + jnp.square(z)) / 2
+
+  for_optimization:
+    f_eq: |
+      def f(y, z, alpha_values):
+          return z
+    g_eq: |
+      def g(y, z, alpha_values):
+          alpha_values = alpha_values.transpose()
+          return jnp.add(jnp.add((-1 * alpha_values[0]), (-2 * alpha_values[1] * y)), jnp.add((-3 * alpha_values[2] * (y**2)), (-4 * alpha_values[3] * (y**3))))
+    energy_function: |
+      def Energy_Function(y, z, alpha_values):
+          return ((jnp.square(y) / 2) + jnp.add(jnp.add((alpha_values[0] * z), (alpha_values[1] * (z**2))), jnp.add((alpha_values[2] * (z**3)), (alpha_values[3] * (z**4)))))

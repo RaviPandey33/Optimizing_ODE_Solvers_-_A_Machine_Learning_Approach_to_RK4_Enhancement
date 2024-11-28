@@ -1,0 +1,10 @@
+
+
+For example : The prk method returns
+
+Setting 1 :
+we can return  : error, energy_error
+
+Setting 2 :
+we can return  : error + energy_error, energy_error
+
