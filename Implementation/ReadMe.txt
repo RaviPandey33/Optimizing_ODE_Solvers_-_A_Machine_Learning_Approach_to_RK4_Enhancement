@@ -1,8 +1,3 @@
-For this setting the variables value are :
+The file Final_Plots.ipynb contains the dynamics plots and the energy plots for before and after optimization process.
 
-steps = 10
-istep = 10
-
-learning_rate = 0.00001 (After Switching to SGD
-learning_rate = 0.0001 (Before Switching) when ADAM
-
+The file Error_Convergence_Plot.ipynb contains the error convergence plots of the optimization process. 
