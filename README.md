@@ -37,7 +37,5 @@ The `Halton Sequence` folder focuses on the implementation of the Halton sequenc
 - **Visualizations**: Includes plots that clearly show the spatial distribution of points, providing insight into the sequence's effectiveness for numerical simulations.
 
 
-## Usage
 
-To clone this repository and explore the contents locally, use the following command:
 
